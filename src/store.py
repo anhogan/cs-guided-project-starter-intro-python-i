@@ -10,22 +10,48 @@ class Department:
   # Products are a tuple with signature(str, int) because tuples are immutable
   def __init__(self, name, products=[]):
     self.name = name
-    self.products = [Product(p[0], p[1]) for p in products]
+    self.products = products
     # Same as Product(*p)
 
   def __str__(self):
-    return f"The {self.name} department has {len(self.products)} products"
+    return f"Welcome to the {self.name} department"
+
+  def add_product(self, product, price):
+    self.products.append(Product(product, price))
+
+  def print_products(self):
+    for p in self.products:
+      print(p)
 
 class Store:
   def __init__(self, name, location, departments):
     self.name = name
     self.location = location
-    self.departments = [Department(d) for d in departments]
+    self.departments = [Department(department_name, department_products) for department_name, department_products in departments.items()]
 
   def __str__(self):
     return f"Store {self.name}, {self.location}, {self.departments}"
 
-store = Store('Lambda Store', 'San Francisco', ['Clothing', 'Cookware', 'Sporting Goods', 'Electronics', 'Home and Office'])
+  def print_products(self):
+    for d in self.departments:
+      d.print_products()
+
+  def print_departments(self):
+    for d in self.departments:
+      print(d)
+
+products_and_departments = {
+  "Clothing": [Product("Sneakers", 100)],
+  "Cookware": [Product("Cast Iron Fishing Pan", 30), Product("Non Stick Frying Pan", 25)],
+  "Sporting Goods": [Product("Golf Club Set", 350), Product("Basketball", 30)],
+  "Electronics": [Product("Nintendo Switch", 300)],
+  "Home and Office": [Product("Notebook", 2)]
+}
+
+store = Store('Lambda Store', 'San Francisco', products_and_departments)
+
+store.print_products()
+store.print_departments()
 
 # While loop allows continuous inputs until a specific exit is specified
 while True:
